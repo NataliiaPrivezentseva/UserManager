@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import java.util.List;
+import java.util.Set;
 
 @RestController
 public class GroupController {
@@ -19,8 +18,14 @@ public class GroupController {
     private GroupService groupService;
 
     @RequestMapping("/groups")
-    public List<Group> getAllGroups() {
+    public Set<Group> getAllGroups() {
         return groupService.getAllGroups();
+    }
+
+    //уточнить путь
+    @RequestMapping("/groupsByUser/{username}")
+    public Set<Group> getAllUsersGroupsForUser(@PathVariable String username){
+        return groupService.getAllUsersGroupsForUser(username);
     }
 
     @RequestMapping("/groups/{nameOfGroup}")
@@ -33,10 +38,10 @@ public class GroupController {
         groupService.addGroup(group);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/groups/{nameOfGroup}")
-    public void updateGroup(@RequestBody Group group){
-        groupService.updateGroup(group);
-    }
+//    @RequestMapping(method = RequestMethod.PUT, value = "/groups/{nameOfGroup}")
+//    public void updateGroup(@RequestBody Group group){
+//        groupService.updateGroup(group);
+//    }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/groups/{nameOfGroup}")
     public void deleteGroup(@PathVariable String nameOfGroup){

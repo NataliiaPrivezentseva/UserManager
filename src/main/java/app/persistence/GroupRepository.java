@@ -3,11 +3,16 @@ package app.persistence;
 import app.model.Group;
 import org.springframework.data.repository.CrudRepository;
 
-public interface GroupRepository extends CrudRepository <Group, String>{
+import java.util.Set;
+
+public interface GroupRepository extends CrudRepository<Group, String> {
+
+    Set<Group> findByUserUsername(String username);
 
     // getAllGroups()
-    // addGroup(Group web)
-    // updateGroup(String nameOfGroup, Group web)
+    // getAllUsersGroupsForUser(String username) - we need our own method!
+    // addGroup(Group group)
+    // updateGroup(String nameOfGroup, Group group)
     // deleteGroup(String nameOfGroup)
 
 }

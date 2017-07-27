@@ -1,12 +1,12 @@
 package app.logic;
 
-import app.persistence.GroupRepository;
 import app.model.Group;
+import app.persistence.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class GroupService {
@@ -14,9 +14,16 @@ public class GroupService {
     @Autowired
     private GroupRepository groupRepository;
 
-    public List<Group> getAllGroups() {
-        List<Group> groups = new ArrayList<>();
+    public Set<Group> getAllGroups() {
+        Set<Group> groups = new HashSet<>();
         groupRepository.findAll()
+                .forEach(groups::add);
+        return groups;
+    }
+
+    public Set<Group> getAllUsersGroupsForUser(String username){
+        Set<Group> groups = new HashSet<>();
+        groupRepository.findByUserUsername(username)
                 .forEach(groups::add);
         return groups;
     }
@@ -37,4 +44,3 @@ public class GroupService {
         groupRepository.delete(nameOfGroup);
     }
 }
-
