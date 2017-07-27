@@ -1,5 +1,7 @@
-package app.group;
+package app.logic;
 
+import app.persistence.GroupRepository;
+import app.model.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

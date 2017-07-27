@@ -1,5 +1,7 @@
-package app.group;
+package app.web;
 
+import app.logic.GroupService;
+import app.model.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
