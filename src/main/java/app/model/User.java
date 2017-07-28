@@ -14,7 +14,7 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private ZonedDateTime dateOfBirth;
+//    private ZonedDateTime dateOfBirth;
 
     @ManyToMany(mappedBy = "usersFromGroup")
     private Set<Group> usersGroups;
@@ -22,13 +22,21 @@ public class User {
     User(){
     }
 
-    public User(String userName, String password, String firstName, String lastName, ZonedDateTime dateOfBirth) {
+    public User(String userName, String password, String firstName, String lastName) {
         this.username = userName;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
     }
+
+    // конструктор с датой
+//    public User(String userName, String password, String firstName, String lastName, ZonedDateTime dateOfBirth) {
+//        this.username = userName;
+//        this.password = password;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.dateOfBirth = dateOfBirth;
+//    }
 
     public String getUsername() {
         return username;
@@ -62,13 +70,13 @@ public class User {
         this.lastName = lastName;
     }
 
-    public ZonedDateTime getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(ZonedDateTime dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
+//    public ZonedDateTime getDateOfBirth() {
+//        return dateOfBirth;
+//    }
+//
+//    public void setDateOfBirth(ZonedDateTime dateOfBirth) {
+//        this.dateOfBirth = dateOfBirth;
+//    }
 
     public Set<Group> getUsersGroups() {
         return usersGroups;

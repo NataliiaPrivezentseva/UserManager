@@ -2,6 +2,7 @@ package app.web;
 
 import app.logic.UserService;
 import app.model.User;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,17 +18,20 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/users")
+    @ApiOperation(value = "Get list of all users")
+    @RequestMapping(method = RequestMethod.GET, value = "/users")
     public Set<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @RequestMapping("/usersByGroup/{nameOfGroup}")
+    @ApiOperation(value = "Get list of users for specified group")
+    @RequestMapping(method = RequestMethod.GET, value = "/usersByGroup/{nameOfGroup}")
     public Set<User> getAllUsersFromGroup(@PathVariable String nameOfGroup){
         return userService.getAllUsersFromGroup(nameOfGroup);
     }
 
-    @RequestMapping("/users/{username}")
+    @ApiOperation(value = "Get user by its username")
+    @RequestMapping(method = RequestMethod.GET, value = "/users/{username}")
     public User getUser(@PathVariable String username){
         return userService.getUser(username);
     }
@@ -50,6 +54,7 @@ public class UserController {
 //        userService.updateUser(user);
 //    }
 
+    @ApiOperation(value = "Delete user by its username")
     @RequestMapping(method = RequestMethod.DELETE, value = "/users/{username}")
     public void deleteUser(@PathVariable String username){
         userService.deleteUser(username);

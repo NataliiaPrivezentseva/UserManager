@@ -2,6 +2,7 @@ package app.web;
 
 import app.logic.GroupService;
 import app.model.Group;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,22 +18,25 @@ public class GroupController {
     @Autowired
     private GroupService groupService;
 
-    @RequestMapping("/groups")
+    @ApiOperation(value = "Get list of all groups")
+    @RequestMapping(method = RequestMethod.GET, value = "/groups")
     public Set<Group> getAllGroups() {
         return groupService.getAllGroups();
     }
 
-//    //уточнить путь
-    @RequestMapping("/groupsByUser/{username}")
+    @ApiOperation(value = "Get list of groups for specified username")
+    @RequestMapping(method = RequestMethod.GET, value = "/groupsByUser/{username}")
     public Set<Group> getAllUsersGroupsForUser(@PathVariable String username){
         return groupService.getAllUsersGroupsForUser(username);
     }
 
-    @RequestMapping("/groups/{nameOfGroup}")
+    @ApiOperation(value = "Get group by its name")
+    @RequestMapping(method = RequestMethod.GET, value = "/groups/{nameOfGroup}")
     public Group getGroup(@PathVariable String nameOfGroup){
         return groupService.getGroup(nameOfGroup);
     }
 
+    @ApiOperation(value = "Add new group")
     @RequestMapping(method = RequestMethod.POST, value = "/groups")
     public void addGroup(@RequestBody Group group){
         groupService.addGroup(group);
@@ -44,6 +48,7 @@ public class GroupController {
         groupService.updateGroup(group);
     }
 
+    @ApiOperation(value = "Delete group by its name")
     @RequestMapping(method = RequestMethod.DELETE, value = "/groups/{nameOfGroup}")
     public void deleteGroup(@PathVariable String nameOfGroup){
         groupService.deleteGroup(nameOfGroup);
