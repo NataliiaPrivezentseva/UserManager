@@ -23,7 +23,7 @@ public class UserService {
 
     public Set<User> getAllUsersFromGroup(String nameOfGroup) {
         Set<User> users = new HashSet<>();
-        userRepository.findByGroupNameOfGroup(nameOfGroup)
+        userRepository.findByUsersGroups(nameOfGroup)
                 .forEach(users::add);
         return users;
     }

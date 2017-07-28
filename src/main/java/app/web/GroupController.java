@@ -22,7 +22,7 @@ public class GroupController {
         return groupService.getAllGroups();
     }
 
-    //уточнить путь
+//    //уточнить путь
     @RequestMapping("/groupsByUser/{username}")
     public Set<Group> getAllUsersGroupsForUser(@PathVariable String username){
         return groupService.getAllUsersGroupsForUser(username);
@@ -38,10 +38,11 @@ public class GroupController {
         groupService.addGroup(group);
     }
 
-//    @RequestMapping(method = RequestMethod.PUT, value = "/groups/{nameOfGroup}")
-//    public void updateGroup(@RequestBody Group group){
-//        groupService.updateGroup(group);
-//    }
+    // как изменяем группу? Продумать методы
+    @RequestMapping(method = RequestMethod.PUT, value = "/groups/{nameOfGroup}")
+    public void updateGroup(@RequestBody Group group){
+        groupService.updateGroup(group);
+    }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/groups/{nameOfGroup}")
     public void deleteGroup(@PathVariable String nameOfGroup){

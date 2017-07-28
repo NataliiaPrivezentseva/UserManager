@@ -14,9 +14,16 @@ public class Group {
     @ManyToMany
     private Set<User> usersFromGroup;
 
+    Group(){}
+
     public Group(String nameOfGroup) {
         this.nameOfGroup = nameOfGroup;
     }
+
+    // не знаю, нужен ли реально этот конструктор, поэтому пока не пишу такого в User
+//    public Group(String nameOfGroup, Set<User> usersFromGroup) {
+//        this.nameOfGroup = nameOfGroup;
+//    }
 
     public String getNameOfGroup() {
         return nameOfGroup;

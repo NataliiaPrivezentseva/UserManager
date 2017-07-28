@@ -19,6 +19,9 @@ public class User {
     @ManyToMany(mappedBy = "usersFromGroup")
     private Set<Group> usersGroups;
 
+    User(){
+    }
+
     public User(String userName, String password, String firstName, String lastName, ZonedDateTime dateOfBirth) {
         this.username = userName;
         this.password = password;

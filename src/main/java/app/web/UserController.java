@@ -17,38 +17,40 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // уточнить, что после слеша, может, тут только "/users"
-    @RequestMapping("/groups/{nameOfGroup}/users")
+    @RequestMapping("/users")
     public Set<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    //уточнить путь
-    @RequestMapping("/groups/{nameOfGroup}/users")
-    public Set<User> getAllUsersFromGroup(String nameOfGroup){
+    @RequestMapping("/usersByGroup/{nameOfGroup}")
+    public Set<User> getAllUsersFromGroup(@PathVariable String nameOfGroup){
         return userService.getAllUsersFromGroup(nameOfGroup);
     }
 
-    @RequestMapping("/groups/{nameOfGroup}/users/{username}")
+    @RequestMapping("/users/{username}")
     public User getUser(@PathVariable String username){
         return userService.getUser(username);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/groups/{nameOfGroup}/users")
-    public void addUser(@RequestBody User user, @RequestBody String nameOfGroup){
-        //todo передать список групп для юзера
-        user.setUsersGroups());
-        userService.addUser(user);
-    }
+//    // второй параметр в методе не нужен? или он должен быть списком групп?
+//    @RequestMapping(method = RequestMethod.POST, value = "/users")
+//    public void addUser(@RequestBody User user, @RequestBody String nameOfGroup){
+//        //todo можно ли юзер сделать без группы? установить группу по умолчанию? установить сразу список групп при создании?
+//        user.setUsersGroups());
+//        userService.addUser(user);
+//    }
+//
+//    // как изменяем юзера? Продумать методы
+//    // сначала получить юзера методом getUser(@PathVariable String username), а потом заменить его на другого юзера
+//    // тогда это будет метод replaceUser(@RequestBody User user, @RequestBody String nameOfGroup)
+//    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}")
+//    public void updateUser(@RequestBody User user, @RequestBody String nameOfGroup){
+//        //todo передать список групп для юзера
+//        user.setUsersGroups());
+//        userService.updateUser(user);
+//    }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/groups/{nameOfGroup}/users/{username}")
-    public void updateUser(@RequestBody User user, @RequestBody String nameOfGroup){
-        //todo передать список групп для юзера
-        user.setUsersGroups());
-        userService.updateUser(user);
-    }
-
-    @RequestMapping(method = RequestMethod.DELETE, value = "/groups/{nameOfGroup}/users/{username}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/users/{username}")
     public void deleteUser(@PathVariable String username){
         userService.deleteUser(username);
     }

@@ -7,7 +7,7 @@ import java.util.Set;
 
 public interface UserRepository extends CrudRepository<User, String> {
 
-    Set<User> findByGroupNameOfGroup(String nameOfGroup);
+    Set<User> findByUsersGroups(String nameOfGroup);
 
     // getAllUsers()
     // getAllUsersFromGroup() - we need our own method!

@@ -7,7 +7,8 @@ import java.util.Set;
 
 public interface GroupRepository extends CrudRepository<Group, String> {
 
-    Set<Group> findByUserUsername(String username);
+    // не понятно, как в этом методе обратиться к полю другого класса, при том, что класс еще и запихан в коллекцию
+    Set<Group> findByUsersFromGroup(String username);
 
     // getAllGroups()
     // getAllUsersGroupsForUser(String username) - we need our own method!
