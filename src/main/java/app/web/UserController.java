@@ -36,7 +36,7 @@ public class UserController {
         return userService.getUser(username);
     }
 
-    // второй параметр в методе не нужен? или он должен быть списком групп?
+    // список групп? тоже сохранить его как?
     @RequestMapping(method = RequestMethod.POST, value = "/users")
     public void addUser(@RequestBody User user){
         //todo можно ли юзер сделать без группы? установить группу по умолчанию? установить сразу список групп при создании?

@@ -1,22 +1,35 @@
 package app.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
+    @Column(name = "username")
     private String username;
+    @Column(name = "password")
     private String password;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
 //    private ZonedDateTime dateOfBirth;
 
-    @ManyToMany(mappedBy = "usersFromGroup")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "groups_users",
+            joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"),
+            inverseJoinColumns = @JoinColumn(name = "name_of_group", referencedColumnName = "name_of_group"))
     private Set<Group> usersGroups;
 
     User(){

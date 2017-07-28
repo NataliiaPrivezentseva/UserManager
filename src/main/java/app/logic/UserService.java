@@ -32,6 +32,7 @@ public class UserService {
         return userRepository.findOne(username);
     }
 
+    // к каким группам принадлежит юзер? как это сохранить?
     public void addUser(User user) {
         userRepository.save(user);
     }
