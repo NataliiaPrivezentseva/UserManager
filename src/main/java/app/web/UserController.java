@@ -36,14 +36,14 @@ public class UserController {
         return userService.getUser(username);
     }
 
-//    // второй параметр в методе не нужен? или он должен быть списком групп?
-//    @RequestMapping(method = RequestMethod.POST, value = "/users")
-//    public void addUser(@RequestBody User user, @RequestBody String nameOfGroup){
-//        //todo можно ли юзер сделать без группы? установить группу по умолчанию? установить сразу список групп при создании?
+    // второй параметр в методе не нужен? или он должен быть списком групп?
+    @RequestMapping(method = RequestMethod.POST, value = "/users")
+    public void addUser(@RequestBody User user){
+        //todo можно ли юзер сделать без группы? установить группу по умолчанию? установить сразу список групп при создании?
 //        user.setUsersGroups());
-//        userService.addUser(user);
-//    }
-//
+        userService.addUser(user);
+    }
+
 //    // как изменяем юзера? Продумать методы
 //    // сначала получить юзера методом getUser(@PathVariable String username), а потом заменить его на другого юзера
 //    // тогда это будет метод replaceUser(@RequestBody User user, @RequestBody String nameOfGroup)
