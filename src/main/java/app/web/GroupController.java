@@ -1,7 +1,7 @@
 package app.web;
 
 import app.logic.GroupService;
-import app.model.Group;
+import app.model.persistence.Group;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +18,7 @@ public class GroupController {
     @Autowired
     private GroupService groupService;
 
+    // работает
     @ApiOperation(value = "Get list of all groups")
     @RequestMapping(method = RequestMethod.GET, value = "/groups")
     public Set<Group> getAllGroups() {
@@ -30,6 +31,7 @@ public class GroupController {
         return groupService.getAllUsersGroupsForUser(username);
     }
 
+    // работает
     @ApiOperation(value = "Get group by its name")
     @RequestMapping(method = RequestMethod.GET, value = "/groups/{nameOfGroup}")
     public Group getGroup(@PathVariable String nameOfGroup){

@@ -1,7 +1,8 @@
 package app.web;
 
 import app.logic.UserService;
-import app.model.User;
+import app.model.dto.UserDTO;
+import app.model.persistence.User;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // работает
     @ApiOperation(value = "Get list of all users")
     @RequestMapping(method = RequestMethod.GET, value = "/users")
     public Set<User> getAllUsers() {
@@ -30,18 +32,17 @@ public class UserController {
         return userService.getAllUsersFromGroup(nameOfGroup);
     }
 
+    // работает
     @ApiOperation(value = "Get user by its username")
     @RequestMapping(method = RequestMethod.GET, value = "/users/{username}")
     public User getUser(@PathVariable String username){
         return userService.getUser(username);
     }
 
-    // список групп? тоже сохранить его как?
     @RequestMapping(method = RequestMethod.POST, value = "/users")
-    public void addUser(@RequestBody User user){
-        //todo можно ли юзер сделать без группы? установить группу по умолчанию? установить сразу список групп при создании?
-//        user.setUsersGroups());
-        userService.addUser(user);
+    public void addUser(@RequestBody UserDTO userDTO){
+        //todo как создаем юзера и группы?
+        userService.addUser(userDTO);
     }
 
 //    // как изменяем юзера? Продумать методы
@@ -50,7 +51,7 @@ public class UserController {
 //    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}")
 //    public void updateUser(@RequestBody User user, @RequestBody String nameOfGroup){
 //        //todo передать список групп для юзера
-//        user.setUsersGroups());
+//        user.setGroupsOfUser());
 //        userService.updateUser(user);
 //    }
 

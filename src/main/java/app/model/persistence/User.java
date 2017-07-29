@@ -1,4 +1,7 @@
-package app.model;
+package app.model.persistence;
+
+import app.model.dto.UserDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,32 +27,41 @@ public class User {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    // сделать еще геттеры, сеттеры и конструкторы
 //    private ZonedDateTime dateOfBirth;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JsonBackReference
     @JoinTable(name = "groups_users",
             joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"),
             inverseJoinColumns = @JoinColumn(name = "name_of_group", referencedColumnName = "name_of_group"))
-    private Set<Group> usersGroups;
+    private Set<Group> groupsOfUser;
 
     User(){
     }
 
-    public User(String userName, String password, String firstName, String lastName) {
-        this.username = userName;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    // конструктор с датой
-//    public User(String userName, String password, String firstName, String lastName, ZonedDateTime dateOfBirth) {
+//    public User(String userName, String password, String firstName, String lastName) {
 //        this.username = userName;
 //        this.password = password;
 //        this.firstName = firstName;
 //        this.lastName = lastName;
-//        this.dateOfBirth = dateOfBirth;
 //    }
+
+    public User(String userName, String password, String firstName, String lastName, Set<Group> groupsOfUser) {
+        this.username = userName;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.groupsOfUser = groupsOfUser;
+    }
+
+    public User (UserDTO userDTO){
+        this.username = userDTO.getUsername();
+        this.password = userDTO.getPassword();
+        this.firstName = userDTO.getFirstName();
+        this.lastName = userDTO.getLastName();
+        this.groupsOfUser = new HashSet<>();
+    }
 
     public String getUsername() {
         return username;
@@ -83,19 +95,20 @@ public class User {
         this.lastName = lastName;
     }
 
-//    public ZonedDateTime getDateOfBirth() {
-//        return dateOfBirth;
-//    }
-//
-//    public void setDateOfBirth(ZonedDateTime dateOfBirth) {
-//        this.dateOfBirth = dateOfBirth;
-//    }
-
-    public Set<Group> getUsersGroups() {
-        return usersGroups;
+    public Set<Group> getGroupsOfUser() {
+        return groupsOfUser;
     }
 
-    public void setUsersGroups(Set<Group> usersGroups) {
-        this.usersGroups = usersGroups;
+    public void setGroupsOfUser(Set<Group> groupsOfUser) {
+        this.groupsOfUser = groupsOfUser;
+    }
+
+    @Override
+    public String toString() {
+        return "username = " + username + "\n" +
+                "password = " + password + "\n" +
+                "firstName = " + firstName + "\n" +
+                "lastName = " + lastName + "\n" +
+                "groupsOfUser = " + groupsOfUser;
     }
 }

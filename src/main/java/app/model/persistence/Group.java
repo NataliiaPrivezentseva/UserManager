@@ -1,4 +1,6 @@
-package app.model;
+package app.model.persistence;
+
+import app.model.dto.GroupDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,14 +28,17 @@ public class Group {
 
     Group(){}
 
-    public Group(String nameOfGroup) {
+//    public Group(String nameOfGroup) {
+//        this.nameOfGroup = nameOfGroup;
+//    }
+
+    public Group(String nameOfGroup, Set<User> usersFromGroup) {
         this.nameOfGroup = nameOfGroup;
     }
 
-    // не знаю, нужен ли реально этот конструктор, поэтому пока не пишу такого в User
-//    public Group(String nameOfGroup, Set<User> usersFromGroup) {
-//        this.nameOfGroup = nameOfGroup;
-//    }
+    public Group(GroupDTO groupDTO){
+        this.nameOfGroup = this.getNameOfGroup();
+    }
 
     public String getNameOfGroup() {
         return nameOfGroup;

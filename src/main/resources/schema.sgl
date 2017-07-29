@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS users;
+CREATE TABLE users(
+username VARCHAR (20) NOT NULL PRIMARY KEY,
+password VARCHAR (16) NOT NULL,
+first_name VARCHAR (45) NOT NULL,
+last_name VARCHAR (45) NOT NULL,
+--date_of_birth DATE NOT NULL
+);
+
+DROP TABLE IF EXISTS groups;
+CREATE TABLE groups(
+name_of_group VARCHAR(45) NOT NULL PRIMARY KEY
+);
+
+DROP TABLE IF EXISTS groups_users
+CREATE TABLE groups_users(
+name_of_group VARCHAR(45) NOT NULL REFERENCES groups (name_of_group),
+username VARCHAR (20) NOT NULL REFERENCES parties (party_id),
+PRIMARY KEY (name_of_group, username),
+);
