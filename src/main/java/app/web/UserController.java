@@ -3,6 +3,7 @@ package app.web;
 import app.logic.UserService;
 import app.model.dto.UserDTO;
 import app.model.persistence.User;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Set;
 
+@Api(tags = "Manager for users")
 @RestController
 public class UserController {
 
@@ -74,16 +77,28 @@ public class UserController {
         userService.changeDateOfBirth(username, dateOfBirth);
     }
 
-    @ApiOperation(value = "Update user: add group to list of user's groups")
+    @ApiOperation(value = "Update user: add one group to list of user's groups")
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/addGroupToGroupsOfUser/{nameOfGroup}")
     public void addGroupToGroupsOfUser(@PathVariable String username, @PathVariable String nameOfGroup){
         userService.addGroupToGroupsOfUser(username, nameOfGroup);
     }
 
-    @ApiOperation(value = "Update user: delete group from list of user's groups")
+    @ApiOperation(value = "Update user: add several groups to list of user's groups")
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/addSeveralGroupsToGroupsOfUser")
+    public void addSeveralGroupsToGroupsOfUser(@PathVariable String username, @RequestParam List<String> namesOfGroups){
+        userService.addSeveralGroupsToGroupsOfUser(username, namesOfGroups);
+    }
+
+    @ApiOperation(value = "Update user: delete one group from list of user's groups")
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/deleteGroupFromGroupsOfUser/{nameOfGroup}")
     public void deleteGroupFromGroupsOfUser(@PathVariable String username, @PathVariable String nameOfGroup){
         userService.deleteGroupFromGroupsOfUser(username, nameOfGroup);
+    }
+
+    @ApiOperation(value = "Update user: delete several groups from list of user's groups")
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/deleteSeveralGroupsFromGroupsOfUser")
+    public void deleteSeveralGroupsFromGroupsOfUser(@PathVariable String username, @RequestParam List<String> namesOfGroups){
+        userService.deleteSeveralGroupsFromGroupsOfUser(username, namesOfGroups);
     }
 
     @ApiOperation(value = "Delete user by its username")

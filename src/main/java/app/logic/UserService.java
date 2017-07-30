@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -87,6 +89,13 @@ public class UserService {
 
     public void addGroupToGroupsOfUser(String username, String nameOfGroup) {
         User user = userRepository.findOneByUsername(username);
+
+        for (Group group : user.getGroupsOfUser()) {
+            if (group.getNameOfGroup().equals(nameOfGroup)) {
+                return;
+            }
+        }
+
         Group group = groupRepository.findOneByNameOfGroup(nameOfGroup);
         if (group == null) {
             group = new Group(nameOfGroup);
@@ -97,15 +106,30 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void addSeveralGroupsToGroupsOfUser(String username, List<String> namesOfGroups) {
+        for (String nameOfGroup : namesOfGroups) {
+            addGroupToGroupsOfUser(username, nameOfGroup);
+        }
+    }
+
     public void deleteGroupFromGroupsOfUser(String username, String nameOfGroup) {
         User user = userRepository.findOneByUsername(username);
         Set<Group> groupsOfUser = user.getGroupsOfUser();
-        for (Group group : groupsOfUser) {
-            if (group.getNameOfGroup().equals(nameOfGroup)){
-                user.getGroupsOfUser().remove(group);
+
+        for (Iterator<Group> iter = groupsOfUser.iterator(); iter.hasNext(); ){
+            Group group = iter.next();
+            if (group.getNameOfGroup().equals(nameOfGroup)) {
+                iter.remove();
+                userRepository.save(user);
+                return;
             }
         }
-        userRepository.save(user);
+    }
+
+    public void deleteSeveralGroupsFromGroupsOfUser(String username, List<String> namesOfGroups) {
+        for (String nameOfGroup : namesOfGroups) {
+            deleteGroupFromGroupsOfUser(username, nameOfGroup);
+        }
     }
 
     public void deleteUser(String username) {

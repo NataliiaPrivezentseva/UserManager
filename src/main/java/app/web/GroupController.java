@@ -3,16 +3,20 @@ package app.web;
 import app.logic.GroupService;
 import app.model.dto.GroupDTO;
 import app.model.persistence.Group;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Set;
 
+@Api(tags = "Manager for groups")
 @RestController
 public class GroupController {
 
@@ -49,16 +53,28 @@ public class GroupController {
         groupService.changeNameOfGroup(nameOfGroup, newNameOfGroup);
     }
 
-    @ApiOperation(value = "Update group: add user to group")
+    @ApiOperation(value = "Update group: add one user to group")
     @RequestMapping(method = RequestMethod.PUT, value = "/groups/{nameOfGroup}/addUserToGroup/{username}")
     public void addUserToGroup(@PathVariable String nameOfGroup, @PathVariable String username){
         groupService.addUserToGroup(nameOfGroup, username);
     }
 
-    @ApiOperation(value = "Update group: delete user from group")
+    @ApiOperation(value = "Update group: add several users to group")
+    @RequestMapping(method = RequestMethod.PUT, value = "/groups/{nameOfGroup}/addSeveralUsersToGroup")
+    public void addSeveralUsersToGroup(@PathVariable String nameOfGroup, @RequestParam List<String> usernames){
+        groupService.addSeveralUsersToGroup(nameOfGroup, usernames);
+    }
+
+    @ApiOperation(value = "Update group: delete one user from group")
     @RequestMapping(method = RequestMethod.PUT, value = "/groups/{nameOfGroup}/deleteUserFromGroup/{username}")
     public void deleteUserFromGroup(@PathVariable String nameOfGroup, @PathVariable String username){
         groupService.deleteUserFromGroup(nameOfGroup, username);
+    }
+
+    @ApiOperation(value = "Update group: delete several users from group")
+    @RequestMapping(method = RequestMethod.PUT, value = "/groups/{nameOfGroup}/deleteSeveralUsersToGroup")
+    public void deleteSeveralUsersFromGroup(@PathVariable String nameOfGroup, @RequestParam List<String> usernames){
+        groupService.deleteSeveralUsersFromGroup(nameOfGroup, usernames);
     }
 
     @ApiOperation(value = "Delete group by its name")

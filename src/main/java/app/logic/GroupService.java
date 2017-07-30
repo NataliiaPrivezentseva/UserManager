@@ -8,7 +8,10 @@ import app.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -57,6 +60,13 @@ public class GroupService {
 
     public void addUserToGroup(String nameOfGroup, String username) {
         Group group = groupRepository.findOneByNameOfGroup(nameOfGroup);
+
+        for (User userFromGroup : group.getUsersFromGroup()) {
+            if (userFromGroup.getUsername().equals(username)) {
+                return;
+            }
+        }
+
         User user = userRepository.findOneByUsername(username);
         if (user == null) {
             user = new User(username);
@@ -66,15 +76,29 @@ public class GroupService {
         groupRepository.save(group);
     }
 
+    public void addSeveralUsersToGroup(String nameOfGroup, List<String> usernames){
+        for (String username : usernames) {
+            addUserToGroup(nameOfGroup, username);
+        }
+    }
+
     public void deleteUserFromGroup(String nameOfGroup, String username) {
         Group group = groupRepository.findOneByNameOfGroup(nameOfGroup);
         Set<User> usersFromGroup = group.getUsersFromGroup();
-        for (User user : usersFromGroup) {
+        for (Iterator<User> iter = usersFromGroup.iterator(); iter.hasNext(); ) {
+            User user = iter.next();
             if (user.getUsername().equals(username)){
-                group.getUsersFromGroup().remove(user);
+                iter.remove();
+                groupRepository.save(group);
+                return;
             }
         }
-        groupRepository.save(group);
+    }
+
+    public void deleteSeveralUsersFromGroup(String nameOfGroup, List<String> usernames){
+        for (String username : usernames) {
+            deleteUserFromGroup(nameOfGroup, username);
+        }
     }
 
     public void deleteGroup(String nameOfGroup) {
