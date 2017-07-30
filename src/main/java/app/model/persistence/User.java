@@ -1,7 +1,9 @@
 package app.model.persistence;
 
 import app.model.dto.UserDTO;
+import app.web.serialization.JsonDateSerializer;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,9 +36,9 @@ public class User {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-
-    // сделать еще геттеры, сеттеры и конструкторы
-//    private ZonedDateTime dateOfBirth;
+    @Column(name = "date_of_birth")
+    @JsonSerialize(using = JsonDateSerializer.class)
+    private Date dateOfBirth;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JsonBackReference
@@ -44,22 +47,25 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "name_of_group", referencedColumnName = "name_of_group"))
     private Set<Group> groupsOfUser;
 
-    User(){
+    User() {
     }
 
-    public User(String userName, String password, String firstName, String lastName, Set<Group> groupsOfUser) {
+    public User(String userName, String password, String firstName, String lastName,
+                Date dateOfBirth, Set<Group> groupsOfUser) {
         this.username = userName;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
         this.groupsOfUser = groupsOfUser;
     }
 
-    public User (UserDTO userDTO){
+    public User(UserDTO userDTO) {
         this.username = userDTO.getUsername();
         this.password = userDTO.getPassword();
         this.firstName = userDTO.getFirstName();
         this.lastName = userDTO.getLastName();
+        this.dateOfBirth = userDTO.getDateOfBirth();
         this.groupsOfUser = new HashSet<>();
     }
 
@@ -103,6 +109,14 @@ public class User {
         this.lastName = lastName;
     }
 
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     public Set<Group> getGroupsOfUser() {
         return groupsOfUser;
     }
@@ -115,8 +129,9 @@ public class User {
     public String toString() {
         return "username = " + username + "\n" +
                 "password = " + password + "\n" +
-                "firstName = " + firstName + "\n" +
-                "lastName = " + lastName + "\n" +
-                "groupsOfUser = " + groupsOfUser;
+                "first name = " + firstName + "\n" +
+                "last name = " + lastName + "\n" +
+                "groups of user = " + groupsOfUser + "\n" +
+                "date of birth = " + dateOfBirth;
     }
 }

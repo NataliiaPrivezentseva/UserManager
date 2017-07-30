@@ -67,6 +67,12 @@ public class UserController {
         userService.changeUsername(username, newUsername);
     }
 
+    @ApiOperation(value = "Update user: change date of birth")
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/changeDateOfBirth/{dateOfBirth}")
+    public void changeDateOfBirth(@PathVariable String username, @PathVariable String dateOfBirth){
+        userService.changeDateOfBirth(username, dateOfBirth);
+    }
+
     @ApiOperation(value = "Delete user by its username")
     @RequestMapping(method = RequestMethod.DELETE, value = "/users/{username}")
     public void deleteUser(@PathVariable String username){

@@ -5,11 +5,15 @@ import app.model.persistence.Group;
 import app.model.persistence.User;
 import app.persistence.GroupRepository;
 import app.persistence.UserRepository;
+import app.web.serialization.DateDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -20,6 +24,9 @@ public class UserService {
 
     @Autowired
     private GroupRepository groupRepository;
+
+    @Autowired
+    private DateDeserializer dateDeserializer;
 
     public Set<User> getAllUsers() {
         Set<User> users = new HashSet<>();
@@ -73,6 +80,12 @@ public class UserService {
     public void changeUsername(String username, String newUsername) {
         User user = userRepository.findOneByUsername(username);
         user.setUsername(newUsername);
+        userRepository.save(user);
+    }
+
+    public void changeDateOfBirth(String username, String dateOfBirth) {
+        User user = userRepository.findOneByUsername(username);
+        user.setDateOfBirth(dateDeserializer.parseDate(dateOfBirth));
         userRepository.save(user);
     }
 

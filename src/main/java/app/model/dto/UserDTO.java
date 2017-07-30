@@ -1,5 +1,6 @@
 package app.model.dto;
 
+import java.util.Date;
 import java.util.Set;
 
 public class UserDTO {
@@ -8,6 +9,7 @@ public class UserDTO {
     private String password;
     private String firstName;
     private String lastName;
+    private Date dateOfBirth;
 
     private Set<String> groupsOfUser;
 
@@ -41,6 +43,14 @@ public class UserDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Set<String>  getGroupsOfUser() {
