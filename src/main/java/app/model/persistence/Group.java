@@ -4,11 +4,14 @@ import app.model.dto.GroupDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,12 +19,16 @@ import java.util.Set;
 public class Group {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "group_id")
+    private long groupID;
+
     @Column(name = "name_of_group")
     private String nameOfGroup;
 
     @ManyToMany
     @JoinTable(name="groups_users",
-            joinColumns=@JoinColumn(name="name_of_group"),
+            joinColumns=@JoinColumn(name="group_id"),
             inverseJoinColumns=@JoinColumn(name="user_id"))
     private Set<User> usersFromGroup;
 
@@ -36,7 +43,16 @@ public class Group {
     }
 
     public Group(GroupDTO groupDTO){
-        this.nameOfGroup = this.getNameOfGroup();
+        this.nameOfGroup = groupDTO.getNameOfGroup();
+        this.setUsersFromGroup(new HashSet<>());
+    }
+
+    public long getGroupID() {
+        return groupID;
+    }
+
+    public void setGroupID(long groupID) {
+        this.groupID = groupID;
     }
 
     public String getNameOfGroup() {

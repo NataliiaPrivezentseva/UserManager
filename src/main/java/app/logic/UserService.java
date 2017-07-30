@@ -9,10 +9,6 @@ import app.web.serialization.DateDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,7 +32,7 @@ public class UserService {
     }
 
     public Set<User> getAllUsersFromGroup(String nameOfGroup) {
-        return groupRepository.findOne(nameOfGroup).getUsersFromGroup();
+        return groupRepository.findOneByNameOfGroup(nameOfGroup).getUsersFromGroup();
     }
 
     public User getUser(String username) {
@@ -49,7 +45,7 @@ public class UserService {
 
         Set<String> namesOfGroupsForUserDTO = userDTO.getGroupsOfUser();
         for (String s : namesOfGroupsForUserDTO) {
-            Group group = groupRepository.findOne(s);
+            Group group = groupRepository.findOneByNameOfGroup(s);
             if (group == null) {
                 group = new Group(s);
                 group.setUsersFromGroup(new HashSet<>());
@@ -59,7 +55,7 @@ public class UserService {
         }
     }
 
-    public void changePassword(String username, String password){
+    public void changePassword(String username, String password) {
         User user = userRepository.findOneByUsername(username);
         user.setPassword(password);
         userRepository.save(user);
@@ -86,6 +82,29 @@ public class UserService {
     public void changeDateOfBirth(String username, String dateOfBirth) {
         User user = userRepository.findOneByUsername(username);
         user.setDateOfBirth(dateDeserializer.parseDate(dateOfBirth));
+        userRepository.save(user);
+    }
+
+    public void addGroupToGroupsOfUser(String username, String nameOfGroup) {
+        User user = userRepository.findOneByUsername(username);
+        Group group = groupRepository.findOneByNameOfGroup(nameOfGroup);
+        if (group == null) {
+            group = new Group(nameOfGroup);
+            user.getGroupsOfUser().add(group);
+        } else {
+            user.getGroupsOfUser().add(group);
+        }
+        userRepository.save(user);
+    }
+
+    public void deleteGroupFromGroupsOfUser(String username, String nameOfGroup) {
+        User user = userRepository.findOneByUsername(username);
+        Set<Group> groupsOfUser = user.getGroupsOfUser();
+        for (Group group : groupsOfUser) {
+            if (group.getNameOfGroup().equals(nameOfGroup)){
+                user.getGroupsOfUser().remove(group);
+            }
+        }
         userRepository.save(user);
     }
 

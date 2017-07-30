@@ -3,12 +3,12 @@ INSERT INTO users (user_id, username, password, first_name, last_name, date_of_b
   ('2', 'Sonic', 'haj55', 'Oleg', 'Sonov', '2000-01-22'),
   ('3', 'Yupie', '222555', 'Yura', 'Privezentsev', '1985-03-22');
 
-INSERT INTO groups (name_of_group) VALUES
-  ('Group One'),
-  ('Group Two');
+INSERT INTO groups (group_id, name_of_group) VALUES
+  ('1', 'Group One'),
+  ('2', 'Group Two');
 
-INSERT INTO groups_users (name_of_group, user_id) VALUES
-	('Group One', '1'),
-	('Group One', '3'),
-	('Group Two', '1'),
-	('Group Two', '2');
+INSERT INTO groups_users (group_id, user_id) VALUES
+	('1', '1'),
+	('1', '3'),
+	('2', '1'),
+	('2', '2');

@@ -43,10 +43,22 @@ public class GroupController {
         groupService.addGroup(groupDTO);
     }
 
-    // как изменяем группу? Продумать методы
-    @RequestMapping(method = RequestMethod.PUT, value = "/groups/{nameOfGroup}")
-    public void updateGroup(@RequestBody Group group){
-        groupService.updateGroup(group);
+    @ApiOperation(value = "Update group: change name of group")
+    @RequestMapping(method = RequestMethod.PUT, value = "/groups/{nameOfGroup}/changeNameOfGroup/{newNameOfGroup}")
+    public void changeNameOfGroup(@PathVariable String nameOfGroup, @PathVariable String newNameOfGroup){
+        groupService.changeNameOfGroup(nameOfGroup, newNameOfGroup);
+    }
+
+    @ApiOperation(value = "Update group: add user to group")
+    @RequestMapping(method = RequestMethod.PUT, value = "/groups/{nameOfGroup}/addUserToGroup/{username}")
+    public void addUserToGroup(@PathVariable String nameOfGroup, @PathVariable String username){
+        groupService.addUserToGroup(nameOfGroup, username);
+    }
+
+    @ApiOperation(value = "Update group: delete user from group")
+    @RequestMapping(method = RequestMethod.PUT, value = "/groups/{nameOfGroup}/deleteUserFromGroup/{username}")
+    public void deleteUserFromGroup(@PathVariable String nameOfGroup, @PathVariable String username){
+        groupService.deleteUserFromGroup(nameOfGroup, username);
     }
 
     @ApiOperation(value = "Delete group by its name")

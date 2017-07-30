@@ -2,7 +2,7 @@ package app.model.persistence;
 
 import app.model.dto.UserDTO;
 import app.web.serialization.JsonDateSerializer;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.CascadeType;
@@ -41,18 +41,22 @@ public class User {
     private Date dateOfBirth;
 
     @ManyToMany(cascade = CascadeType.MERGE)
-    @JsonBackReference
+    @JsonIgnore
     @JoinTable(name = "groups_users",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "name_of_group", referencedColumnName = "name_of_group"))
+            inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "group_id"))
     private Set<Group> groupsOfUser;
 
     User() {
     }
 
-    public User(String userName, String password, String firstName, String lastName,
+    public User (String username){
+        this.username = username;
+    }
+
+    public User(String username, String password, String firstName, String lastName,
                 Date dateOfBirth, Set<Group> groupsOfUser) {
-        this.username = userName;
+        this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;

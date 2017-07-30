@@ -15,7 +15,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@ComponentScan
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -28,10 +27,10 @@ public class AppStarter {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("app"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .apiInfo(apiInfo());
     }
 
-    //не понимаю, где это отображается и как это правильно заполнить. И надо ли?
     private ApiInfo apiInfo() {
                 return new ApiInfoBuilder()
                 .title("Application for managing users and groups")

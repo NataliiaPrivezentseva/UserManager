@@ -73,6 +73,18 @@ public class UserController {
         userService.changeDateOfBirth(username, dateOfBirth);
     }
 
+    @ApiOperation(value = "Update user: add group to list of user's groups")
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/addGroupToGroupsOfUser/{nameOfGroup}")
+    public void addGroupToGroupsOfUser(@PathVariable String username, @PathVariable String nameOfGroup){
+        userService.addGroupToGroupsOfUser(username, nameOfGroup);
+    }
+
+    @ApiOperation(value = "Update user: delete group from list of user's groups")
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/deleteGroupFromGroupsOfUser/{nameOfGroup}")
+    public void deleteGroupFromGroupsOfUser(@PathVariable String username, @PathVariable String nameOfGroup){
+        userService.deleteGroupFromGroupsOfUser(username, nameOfGroup);
+    }
+
     @ApiOperation(value = "Delete user by its username")
     @RequestMapping(method = RequestMethod.DELETE, value = "/users/{username}")
     public void deleteUser(@PathVariable String username){
