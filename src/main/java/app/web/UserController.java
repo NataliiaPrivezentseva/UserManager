@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
@@ -44,8 +45,8 @@ public class UserController {
     }
 
     @ApiOperation(value = "Update user: change password")
-    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/changePassword/{password}")
-    public void changePassword(@PathVariable String username, @PathVariable String password){
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/changePassword")
+    public void changePassword(@PathVariable String username, @RequestParam String password){
         userService.changePassword(username, password);
     }
 
