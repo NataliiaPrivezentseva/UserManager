@@ -33,14 +33,14 @@ public class UserService {
     }
 
     public User getUser(String username) {
-        return userRepository.findOne(username);
+        return userRepository.findOneByUsername(username);
     }
 
     public void addUser(UserDTO userDTO) {
         User user = new User(userDTO);
         userRepository.save(user);
 
-        List<String> namesOfGroupsForUserDTO = userDTO.getGroupsOfUser();
+        Set<String> namesOfGroupsForUserDTO = userDTO.getGroupsOfUser();
         for (String s : namesOfGroupsForUserDTO) {
             Group group = groupRepository.findOne(s);
             if (group == null) {
@@ -53,31 +53,31 @@ public class UserService {
     }
 
     public void changePassword(String username, String password){
-        User user = userRepository.findOne(username);
+        User user = userRepository.findOneByUsername(username);
         user.setPassword(password);
         userRepository.save(user);
     }
 
     public void changeFirstName(String username, String firstName) {
-        User user = userRepository.findOne(username);
+        User user = userRepository.findOneByUsername(username);
         user.setFirstName(firstName);
         userRepository.save(user);
     }
 
     public void changeLastName(String username, String lastName) {
-        User user = userRepository.findOne(username);
+        User user = userRepository.findOneByUsername(username);
         user.setLastName(lastName);
         userRepository.save(user);
     }
 
-    // do not work
     public void changeUsername(String username, String newUsername) {
-        User user = userRepository.findOne(username);
+        User user = userRepository.findOneByUsername(username);
         user.setUsername(newUsername);
         userRepository.save(user);
     }
 
     public void deleteUser(String username) {
-        userRepository.delete(username);
+        User user = userRepository.findOneByUsername(username);
+        userRepository.delete(user);
     }
 }

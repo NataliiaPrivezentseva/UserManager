@@ -1,20 +1,38 @@
 DROP TABLE IF EXISTS users;
 CREATE TABLE users(
-username VARCHAR (20) NOT NULL PRIMARY KEY,
-password VARCHAR (16) NOT NULL,
-first_name VARCHAR (45) NOT NULL,
-last_name VARCHAR (45) NOT NULL,
---date_of_birth DATE NOT NULL
+    user_id BIGINT PRIMARY KEY auto_increment,
+    username VARCHAR (20) NOT NULL PRIMARY KEY,
+    password VARCHAR (16) NOT NULL,
+    first_name VARCHAR (45) NOT NULL,
+    last_name VARCHAR (45) NOT NULL,
+    --date_of_birth DATE NOT NULL
 );
 
 DROP TABLE IF EXISTS groups;
 CREATE TABLE groups(
-name_of_group VARCHAR(45) NOT NULL PRIMARY KEY
+    name_of_group VARCHAR(45) NOT NULL PRIMARY KEY
 );
 
 DROP TABLE IF EXISTS groups_users
 CREATE TABLE groups_users(
-name_of_group VARCHAR(45) NOT NULL REFERENCES groups (name_of_group),
-username VARCHAR (20) NOT NULL REFERENCES parties (party_id),
-PRIMARY KEY (name_of_group, username),
+    name_of_group VARCHAR(45) NOT NULL REFERENCES groups (name_of_group),
+    user_id BIGINT NOT NULL REFERENCES users (user_id),
+    PRIMARY KEY (name_of_group, user_id),
 );
+
+
+--CREATE TABLE IF NOT EXISTS groups_users
+--(
+--name_of_group VARCHAR(45) NOT NULL,
+--username VARCHAR (20) NOT NULL,
+--PRIMARY KEY (name_of_group, username),
+--FOREIGN KEY (name_of_group) REFERENCES groups (name_of_group),
+--FOREIGN KEY (username) REFERENCES users (username)
+--);
+
+--DROP TABLE IF EXISTS people_parties;
+--CREATE TABLE people_parties (
+--  person_id BIGINT NOT NULL REFERENCES people (person_id),
+--  party_id BIGINT NOT NULL REFERENCES parties (party_id),
+--  PRIMARY KEY (person_id, party_id),
+--);

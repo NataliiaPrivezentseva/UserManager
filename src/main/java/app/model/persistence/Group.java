@@ -22,7 +22,7 @@ public class Group {
     @ManyToMany
     @JoinTable(name="groups_users",
             joinColumns=@JoinColumn(name="name_of_group"),
-            inverseJoinColumns=@JoinColumn(name="username"))
+            inverseJoinColumns=@JoinColumn(name="user_id"))
     private Set<User> usersFromGroup;
 
     Group(){}

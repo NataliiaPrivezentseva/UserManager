@@ -61,7 +61,6 @@ public class UserController {
         userService.changeLastName(username, lastName);
     }
 
-    // do not work
     @ApiOperation(value = "Update user: change username")
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/changeUserame/{newUsername}")
     public void changeUsername(@PathVariable String username, @PathVariable String newUsername){

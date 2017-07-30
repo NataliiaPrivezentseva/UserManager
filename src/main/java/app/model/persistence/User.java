@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -19,6 +21,10 @@ import java.util.Set;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
+    private long userID;
+
     @Column(name = "username")
     private String username;
     @Column(name = "password")
@@ -27,13 +33,14 @@ public class User {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+
     // сделать еще геттеры, сеттеры и конструкторы
 //    private ZonedDateTime dateOfBirth;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JsonBackReference
     @JoinTable(name = "groups_users",
-            joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"),
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "name_of_group", referencedColumnName = "name_of_group"))
     private Set<Group> groupsOfUser;
 
@@ -54,6 +61,14 @@ public class User {
         this.firstName = userDTO.getFirstName();
         this.lastName = userDTO.getLastName();
         this.groupsOfUser = new HashSet<>();
+    }
+
+    public long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(long userID) {
+        this.userID = userID;
     }
 
     public String getUsername() {
