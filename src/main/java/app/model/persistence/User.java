@@ -40,13 +40,6 @@ public class User {
     User(){
     }
 
-//    public User(String userName, String password, String firstName, String lastName) {
-//        this.username = userName;
-//        this.password = password;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//    }
-
     public User(String userName, String password, String firstName, String lastName, Set<Group> groupsOfUser) {
         this.username = userName;
         this.password = password;

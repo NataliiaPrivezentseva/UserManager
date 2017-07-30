@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -28,44 +29,51 @@ public class UserService {
     }
 
     public Set<User> getAllUsersFromGroup(String nameOfGroup) {
-        Set<User> users = new HashSet<>();
-        userRepository.findByGroupsOfUser(nameOfGroup)
-                .forEach(users::add);
-        return users;
+        return groupRepository.findOne(nameOfGroup).getUsersFromGroup();
     }
 
     public User getUser(String username) {
         return userRepository.findOne(username);
     }
 
-    // метод не добавляет новую группу, если таковой не существовало
     public void addUser(UserDTO userDTO) {
         User user = new User(userDTO);
         userRepository.save(user);
 
-        System.out.println(user.toString());
-
-        Iterable<Group> groupsOfUser = groupRepository.findAll(userDTO.getGroupsOfUser());
-        for (Group group : groupsOfUser) {
-
-            Iterable<Group> groups = groupRepository.findAll();
-            Set<Group> existingGroups = new HashSet<>();
-            for (Group group1 : groups) {
-                existingGroups.add(group1);
+        List<String> namesOfGroupsForUserDTO = userDTO.getGroupsOfUser();
+        for (String s : namesOfGroupsForUserDTO) {
+            Group group = groupRepository.findOne(s);
+            if (group == null) {
+                group = new Group(s);
+                group.setUsersFromGroup(new HashSet<>());
             }
-
-            if (!existingGroups.contains(group)){
-                groupRepository.save(group);
-            }
-
             group.getUsersFromGroup().add(user);
-            user.getGroupsOfUser().add(group);
+            groupRepository.save(group);
         }
-
-        groupRepository.save(groupsOfUser);
     }
 
-    public void updateUser(User user) {
+    public void changePassword(String username, String password){
+        User user = userRepository.findOne(username);
+        user.setPassword(password);
+        userRepository.save(user);
+    }
+
+    public void changeFirstName(String username, String firstName) {
+        User user = userRepository.findOne(username);
+        user.setFirstName(firstName);
+        userRepository.save(user);
+    }
+
+    public void changeLastName(String username, String lastName) {
+        User user = userRepository.findOne(username);
+        user.setLastName(lastName);
+        userRepository.save(user);
+    }
+
+    // do not work
+    public void changeUsername(String username, String newUsername) {
+        User user = userRepository.findOne(username);
+        user.setUsername(newUsername);
         userRepository.save(user);
     }
 

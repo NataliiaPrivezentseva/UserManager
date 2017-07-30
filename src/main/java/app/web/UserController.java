@@ -19,7 +19,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // работает
     @ApiOperation(value = "Get list of all users")
     @RequestMapping(method = RequestMethod.GET, value = "/users")
     public Set<User> getAllUsers() {
@@ -32,28 +31,42 @@ public class UserController {
         return userService.getAllUsersFromGroup(nameOfGroup);
     }
 
-    // работает
     @ApiOperation(value = "Get user by its username")
     @RequestMapping(method = RequestMethod.GET, value = "/users/{username}")
     public User getUser(@PathVariable String username){
         return userService.getUser(username);
     }
 
+    @ApiOperation(value = "Add new user")
     @RequestMapping(method = RequestMethod.POST, value = "/users")
     public void addUser(@RequestBody UserDTO userDTO){
-        //todo как создаем юзера и группы?
         userService.addUser(userDTO);
     }
 
-//    // как изменяем юзера? Продумать методы
-//    // сначала получить юзера методом getUser(@PathVariable String username), а потом заменить его на другого юзера
-//    // тогда это будет метод replaceUser(@RequestBody User user, @RequestBody String nameOfGroup)
-//    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}")
-//    public void updateUser(@RequestBody User user, @RequestBody String nameOfGroup){
-//        //todo передать список групп для юзера
-//        user.setGroupsOfUser());
-//        userService.updateUser(user);
-//    }
+    @ApiOperation(value = "Update user: change password")
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/changePassword/{password}")
+    public void changePassword(@PathVariable String username, @PathVariable String password){
+        userService.changePassword(username, password);
+    }
+
+    @ApiOperation(value = "Update user: change first name")
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/changeFirstName/{firstName}")
+    public void changeFirstName(@PathVariable String username, @PathVariable String firstName){
+        userService.changeFirstName(username, firstName);
+    }
+
+    @ApiOperation(value = "Update user: change last name")
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/changeLastName/{lastName}")
+    public void changeLastName(@PathVariable String username, @PathVariable String lastName){
+        userService.changeLastName(username, lastName);
+    }
+
+    // do not work
+    @ApiOperation(value = "Update user: change username")
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/changeUserame/{newUsername}")
+    public void changeUsername(@PathVariable String username, @PathVariable String newUsername){
+        userService.changeUsername(username, newUsername);
+    }
 
     @ApiOperation(value = "Delete user by its username")
     @RequestMapping(method = RequestMethod.DELETE, value = "/users/{username}")

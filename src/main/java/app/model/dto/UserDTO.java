@@ -1,5 +1,6 @@
 package app.model.dto;
 
+import java.util.List;
 import java.util.Set;
 
 public class UserDTO {
@@ -9,7 +10,7 @@ public class UserDTO {
     private String firstName;
     private String lastName;
 
-    private Set<String> groupsOfUser;
+    private List<String> groupsOfUser;
 
     public String getUsername() {
         return username;
@@ -43,11 +44,11 @@ public class UserDTO {
         this.lastName = lastName;
     }
 
-    public Set<String> getGroupsOfUser() {
+    public List<String>  getGroupsOfUser() {
         return groupsOfUser;
     }
 
-    public void setGroupsOfUser(Set<String> groupsOfUser) {
+    public void setGroupsOfUser(List<String> groupsOfUser) {
         this.groupsOfUser = groupsOfUser;
     }
 }

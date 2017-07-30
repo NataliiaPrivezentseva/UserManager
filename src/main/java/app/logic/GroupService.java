@@ -1,5 +1,6 @@
 package app.logic;
 
+import app.model.dto.GroupDTO;
 import app.model.persistence.Group;
 import app.persistence.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,8 @@ public class GroupService {
         return groupRepository.findOne(nameOfGroup);
     }
 
-    public void addGroup(Group group) {
+    public void addGroup(GroupDTO groupDTO) {
+        Group group = new Group(groupDTO);
         groupRepository.save(group);
     }
 

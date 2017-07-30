@@ -20,17 +20,16 @@ public class Group {
     private String nameOfGroup;
 
     @ManyToMany
-    @JoinTable(name = "groups_users",
-            joinColumns = @JoinColumn(name = "name_of_group", referencedColumnName = "name_of_group"),
-            inverseJoinColumns = @JoinColumn(name = "username", referencedColumnName = "username"))
-
+    @JoinTable(name="groups_users",
+            joinColumns=@JoinColumn(name="name_of_group"),
+            inverseJoinColumns=@JoinColumn(name="username"))
     private Set<User> usersFromGroup;
 
     Group(){}
 
-//    public Group(String nameOfGroup) {
-//        this.nameOfGroup = nameOfGroup;
-//    }
+    public Group(String nameOfGroup) {
+        this.nameOfGroup = nameOfGroup;
+    }
 
     public Group(String nameOfGroup, Set<User> usersFromGroup) {
         this.nameOfGroup = nameOfGroup;

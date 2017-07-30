@@ -1,6 +1,7 @@
 package app.web;
 
 import app.logic.GroupService;
+import app.model.dto.GroupDTO;
 import app.model.persistence.Group;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,6 @@ public class GroupController {
     @Autowired
     private GroupService groupService;
 
-    // работает
     @ApiOperation(value = "Get list of all groups")
     @RequestMapping(method = RequestMethod.GET, value = "/groups")
     public Set<Group> getAllGroups() {
@@ -31,7 +31,6 @@ public class GroupController {
         return groupService.getAllUsersGroupsForUser(username);
     }
 
-    // работает
     @ApiOperation(value = "Get group by its name")
     @RequestMapping(method = RequestMethod.GET, value = "/groups/{nameOfGroup}")
     public Group getGroup(@PathVariable String nameOfGroup){
@@ -40,8 +39,8 @@ public class GroupController {
 
     @ApiOperation(value = "Add new group")
     @RequestMapping(method = RequestMethod.POST, value = "/groups")
-    public void addGroup(@RequestBody Group group){
-        groupService.addGroup(group);
+    public void addGroup(@RequestBody GroupDTO groupDTO){
+        groupService.addGroup(groupDTO);
     }
 
     // как изменяем группу? Продумать методы
