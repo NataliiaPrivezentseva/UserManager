@@ -20,5 +20,4 @@ public class JsonDateSerializer extends JsonSerializer {
         String formattedDate = dateFormat.format(date);
         jsonGenerator.writeString(formattedDate);
     }
-
 }

@@ -9,6 +9,5 @@ import java.util.Set;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    Set<User> findByGroupsOfUser(String nameOfGroup);
     User findOneByUsername(String username);
 }
