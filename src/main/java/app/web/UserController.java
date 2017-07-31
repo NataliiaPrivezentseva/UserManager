@@ -71,7 +71,7 @@ public class UserController {
         userService.changeUsername(username, newUsername);
     }
 
-    @ApiOperation(value = "Update user: change date of birth", notes = "Date format: dd-MM-yyyy")
+    @ApiOperation(value = "Update user: change date of birth", notes = "Date format: yyyy-MM-dd")
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}/changeDateOfBirth/{dateOfBirth}")
     public void changeDateOfBirth(@PathVariable String username, @PathVariable String dateOfBirth){
         userService.changeDateOfBirth(username, dateOfBirth);
