@@ -1,7 +1,9 @@
 # UserManager
 
-This is a user management system that is available through the browser (Swagger API).
+This is a user management system that is available through the browser.
 The system stores data in an SQL database.
+
+This project uses Swagger API and SpringBoot.
 
 Functionalities
 1. Managing users
